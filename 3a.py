@@ -82,3 +82,33 @@ hyperF = dict(n_estimators = n_estimators, max_depth = max_depth,
 gridF = GridSearchCV(forest, hyperF, cv = 3, verbose = 1, 
                       n_jobs = -1)
 bestF = gridF.fit(x_train, y_train)
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+classifier = RandomForestClassifier(n_estimators=300, random_state=0)
+
+
+from sklearn.model_selection import cross_val_score
+all_accuracies = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=5)
+
+
+print(all_accuracies)
+
+
+grid_param = {
+    'n_estimators': [100, 300, 500, 800, 1000],
+    'criterion': ['gini', 'entropy'],
+    'bootstrap': [True, False]
+}
+
+
+gd_sr = GridSearchCV(estimator=classifier,
+                     param_grid=grid_param,
+                     scoring='accuracy',
+                     cv=5,
+                     n_jobs=-1)
+
+
+gd_sr.fit(X_train, y_train)
+
+
+best_result = gd_sr.best_score_
+print(best_result)
