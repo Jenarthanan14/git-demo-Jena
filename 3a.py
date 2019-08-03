@@ -165,3 +165,22 @@ from sklearn import preprocessing
 from sklearn.model_selection import GridSearchCV
 from sklearn.grid_search import GridSearchCV
 from sklearn.model_selection import learning_curve, GridSearchCV
+
+
+
+clf = xgb.XGBClassifier()
+parameters = {
+    'n_estimators': [100, 250, 500],
+    'max_depth': [6, 9, 12],
+    'subsample': [0.9, 1.0],
+    'colsample_bytree': [0.9, 1.0],
+}
+bsn = datasets.load_iris()
+X, Y = bsn.data, bsn.target
+grid = GridSearchCV(clf,
+                    parameters, n_jobs=4,
+                    scoring="neg_log_loss",
+                    cv=3)
+
+grid.fit(X, Y)
+print("Best: %f using %s" % 
