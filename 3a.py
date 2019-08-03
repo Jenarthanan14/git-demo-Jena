@@ -69,3 +69,16 @@ pprint(random_grid)
  'min_samples_leaf': [1, 2, 4],
  'min_samples_split': [2, 5, 10],
  'n_estimators': [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]}
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$44
+n_estimators = [100, 300, 500, 800, 1200]
+max_depth = [5, 8, 15, 25, 30]
+min_samples_split = [2, 5, 10, 15, 100]
+min_samples_leaf = [1, 2, 5, 10] 
+
+hyperF = dict(n_estimators = n_estimators, max_depth = max_depth,  
+              min_samples_split = min_samples_split, 
+             min_samples_leaf = min_samples_leaf)
+
+gridF = GridSearchCV(forest, hyperF, cv = 3, verbose = 1, 
+                      n_jobs = -1)
+bestF = gridF.fit(x_train, y_train)
