@@ -164,3 +164,4 @@ print(best_result)
 from sklearn import preprocessing
 from sklearn.model_selection import GridSearchCV
 from sklearn.grid_search import GridSearchCV
+from sklearn.model_selection import learning_curve, GridSearchCV
