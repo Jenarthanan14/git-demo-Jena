@@ -86,6 +86,31 @@ rf_random.best_params_
  'min_samples_leaf': 4,
  'min_samples_split': 10,
  'n_estimators': 400}
+
+
+def evaluate(model, test_features, test_labels):
+    predictions = model.predict(test_features)
+    errors = abs(predictions - test_labels)
+    mape = 100 * np.mean(errors / test_labels)
+    accuracy = 100 - mape
+    print('Model Performance')
+    print('Average Error: {:0.4f} degrees.'.format(np.mean(errors)))
+    print('Accuracy = {:0.2f}%.'.format(accuracy))
+    
+    return accuracy
+base_model = RandomForestRegressor(n_estimators = 10, random_state = 42)
+base_model.fit(train_features, train_labels)
+base_accuracy = evaluate(base_model, test_features, test_labels)
+Model Performance
+Average Error: 3.9199 degrees.
+Accuracy = 93.36%.
+best_random = rf_random.best_estimator_
+random_accuracy = evaluate(best_random, test_features, test_labels)
+Model Performance
+Average Error: 3.7152 degrees.
+Accuracy = 93.73%.
+print('Improvement of {:0.2f}%.'.format( 100 * (random_accuracy - base_accuracy) / base_accuracy))
+Improvement of 0.40%.
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$44
 n_estimators = [100, 300, 500, 800, 1200]
 max_depth = [5, 8, 15, 25, 30]
