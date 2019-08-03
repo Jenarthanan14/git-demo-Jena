@@ -69,6 +69,23 @@ pprint(random_grid)
  'min_samples_leaf': [1, 2, 4],
  'min_samples_split': [2, 5, 10],
  'n_estimators': [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]}
+
+
+# First create the base model to tune
+rf = RandomForestRegressor()
+# Random search of parameters, using 3 fold cross validation, 
+# search across 100 different combinations, and use all available cores
+rf_random = RandomizedSearchCV(estimator = rf, param_distributions = random_grid, n_iter = 100, cv = 3, verbose=2, random_state=42, n_jobs = -1)
+# Fit the random search model
+rf_random.fit(train_features, train_labels)
+
+rf_random.best_params_
+{'bootstrap': True,
+ 'max_depth': 70,
+ 'max_features': 'auto',
+ 'min_samples_leaf': 4,
+ 'min_samples_split': 10,
+ 'n_estimators': 400}
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$44
 n_estimators = [100, 300, 500, 800, 1200]
 max_depth = [5, 8, 15, 25, 30]
